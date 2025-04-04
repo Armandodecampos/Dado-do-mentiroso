@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Jogo de Dados</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -28,14 +29,21 @@
             min-height: 100vh; /* Garante que o container ocupe toda a altura */
         }
 
-        .controls {
+        .controls-container {
             position: fixed;
             top: 30px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            gap: 15px;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
             z-index: 10;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
         }
 
         .controls button {
@@ -51,17 +59,46 @@
         }
 
         .controls button:hover {
-            background-color: #0056b3;
+            background-color: #aaa;
         }
 
-        .dice-container {
+        .dice-counter {
+            display: flex;
+            gap: 10px;
+        }
+
+        .counter-point {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .dice-area {
             position: fixed;
             bottom: 50px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            gap: 25px;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px; /* Espaço entre o botão e os dados */
             z-index: 10;
+        }
+
+        #hideDiceBtn {
+            background-color: transparent;
+            color: #fff;
+            border: none;
+            font-size: 50px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .dice-container {
+            display: flex;
+            gap: 25px;
         }
 
         .die {
@@ -85,6 +122,12 @@
             transform: scale(1.05);
         }
 
+        .die.hidden-value {
+            color: transparent;
+            background-color: #333; /* Cor de fundo para simular oculto */
+            border-color: #333;
+        }
+
         .die.rolling {
             animation: roll 0.5s linear infinite;
         }
@@ -97,23 +140,28 @@
 </head>
 <body>
     <div class="container">
-        <div class="controls">
-            <button id="rollBtn">
-                <i class="fas fa-dice-d6"></i> Jogar
-            </button>
-            <button id="removeBtn">
-                <i class="fas fa-minus-circle"></i> Remover
-            </button>
-            <button id="addBtn">
-                <i class="fas fa-plus-circle"></i> Adicionar
-            </button>
+        <div class="controls-container">
+            <div class="controls">
+                <button id="rollBtn">
+                    <i class="fas fa-dice-d6"></i> Jogar
+                </button>
+                <button id="removeBtn">
+                    <i class="fas fa-minus-circle"></i> Remover
+                </button>
+                <button id="addBtn">
+                    <i class="fas fa-plus-circle"></i> Adicionar
+                </button>
+            </div>
+            <div class="dice-counter" id="diceCounter">
+                </div>
         </div>
-        <div class="dice-container">
-            <div class="die"><i class="fas fa-dice-six"></i></div>
-            <div class="die"><i class="fas fa-dice-six"></i></div>
-            <div class="die"><i class="fas fa-dice-six"></i></div>
-            <div class="die"><i class="fas fa-dice-six"></i></div>
-            <div class="die"><i class="fas fa-dice-six"></i></div>
+        <div class="dice-area">
+            <button id="hideDiceBtn">
+                <i class="fas fa-eye"></i>
+            </button>
+            <br>
+            <div class="dice-container">
+            </div>
         </div>
     </div>
 
@@ -122,8 +170,22 @@
         const rollBtn = document.getElementById('rollBtn');
         const removeBtn = document.getElementById('removeBtn');
         const addBtn = document.getElementById('addBtn');
+        const hideDiceBtn = document.getElementById('hideDiceBtn');
+        const diceCounterContainer = document.getElementById('diceCounter');
+        const diceArea = document.querySelector('.dice-area');
         const maxDice = 5;
-        const minDice = 0; // Permite remover até o último dado
+        const minDice = 0;
+        let currentDiceCount = 0; // Inicialmente 0 dados
+        let diceValuesVisible = true;
+
+        function updateDiceCounter() {
+            diceCounterContainer.innerHTML = '';
+            for (let i = 0; i < currentDiceCount; i++) {
+                const point = document.createElement('div');
+                point.classList.add('counter-point');
+                diceCounterContainer.appendChild(point);
+            }
+        }
 
         function getRandomDiceFace() {
             const faces = [
@@ -144,31 +206,67 @@
                 setTimeout(() => {
                     die.classList.remove('rolling');
                     const icon = die.querySelector('i');
-                    icon.className = 'fas ' + getRandomDiceFace();
+                    const newFace = getRandomDiceFace();
+                    icon.className = 'fas ' + newFace;
+                    updateDiceVisibility(die);
                 }, 500);
             });
+        }
+
+        function updateDiceVisibility(die) {
+            if (!diceValuesVisible) {
+                die.classList.add('hidden-value');
+            } else {
+                die.classList.remove('hidden-value');
+            }
+        }
+
+        function toggleDiceVisibility() {
+            diceValuesVisible = !diceValuesVisible;
+            const dice = document.querySelectorAll('.die');
+            const eyeIcon = hideDiceBtn.querySelector('i');
+
+            dice.forEach(updateDiceVisibility);
+
+            if (diceValuesVisible) {
+                eyeIcon.classList.remove('fa-eye-slash');
+                eyeIcon.classList.add('fa-eye');
+            } else {
+                eyeIcon.classList.remove('fa-eye');
+                eyeIcon.classList.add('fa-eye-slash');
+            }
         }
 
         function removeDie() {
             const dice = document.querySelectorAll('.die');
             if (dice.length > minDice) {
                 diceContainer.removeChild(dice[dice.length - 1]);
+                currentDiceCount--;
+                updateDiceCounter();
             }
         }
 
         function addDie() {
-            const dice = document.querySelectorAll('.die');
-            if (dice.length < maxDice) {
+            if (currentDiceCount < maxDice) {
                 const newDie = document.createElement('div');
                 newDie.classList.add('die');
                 newDie.innerHTML = '<i class="fas fa-dice-six"></i>';
                 diceContainer.appendChild(newDie);
+                currentDiceCount++;
+                updateDiceCounter();
+
+                // Aplica a visibilidade ao novo dado
+                updateDiceVisibility(newDie);
             }
         }
 
         rollBtn.addEventListener('click', rollDice);
         removeBtn.addEventListener('click', removeDie);
         addBtn.addEventListener('click', addDie);
+        hideDiceBtn.addEventListener('click', toggleDiceVisibility);
+
+        // Inicializar o contador de dados
+        updateDiceCounter();
     </script>
 </body>
 </html>
