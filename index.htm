@@ -29,6 +29,17 @@
             min-height: 100vh; /* Garante que o container ocupe toda a altura */
         }
 
+        .middle-separator {
+            position: fixed; /* Fixa a linha na viewport */
+            top: 50%; /* Posiciona o topo da linha no meio da viewport */
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: white;
+            transform: translateY(-50%); /* Ajusta a linha para que o centro dela fique no meio */
+            z-index: 5; /* Garante que a linha fique abaixo dos controles e dados, se necessário */
+        }
+
         .controls-container {
             position: fixed;
             top: 30px;
@@ -64,15 +75,28 @@
 
         .dice-counter {
             display: flex;
-            gap: 10px;
+            gap: 25px;
         }
 
         .counter-point {
+            font-size: 70px;
             width: 50px;
             height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid #333;
             border-radius: 10px;
-            background-color: #fff;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            background-color: #000;
+            color: #fff;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .counter-point i {
+            font-size: inherit; /* Herda o tamanho definido para o counter-point */
+            color: inherit; /* Herda a cor definida para o counter-point */
         }
 
         .dice-area {
@@ -153,8 +177,11 @@
                 </button>
             </div>
             <div class="dice-counter" id="diceCounter">
-                </div>
+            </div>
         </div>
+    </div>
+    <div class="middle-separator"></div>
+    <div class="container">
         <div class="dice-area">
             <button id="hideDiceBtn">
                 <i class="fas fa-eye"></i>
@@ -164,6 +191,11 @@
             </div>
         </div>
     </div>
+
+    <audio id="rollSound" src="https://dl.dropbox.com/scl/fi/lawmyuvtabr6nybkd4f6t/jogar-dados.mp3?rlkey=evl8egxa4w0ennfguprqngoy3&st=68x60hc3&dl=0"></audio>
+    <audio id="removeSound" src="https://dl.dropbox.com/scl/fi/74y42ahz7m5vsh6xzuyhj/tap-notification-180637.mp3?rlkey=nzxmoqd8s0l4avnc49aiqj840&st=h9uqk0ev&dl=0"></audio>
+    <audio id="addSound" src="https://dl.dropbox.com/scl/fi/ahl7p9asseldt95f9s408/correct-choice-43861.mp3?rlkey=3iy41q71iumgnuqca7los24zu&st=mj1v4i7j&dl=0"></audio>
+    <audio id="hideSound" src="https://dl.dropbox.com/scl/fi/xvxq5dlhobkpjckzhub7z/rapid-wind-sound-effect-2-108400.mp3?rlkey=fixzfbivofazenalmkgh7dqh9&st=iewwoho9&dl=0"></audio>
 
     <script>
         const diceContainer = document.querySelector('.dice-container');
@@ -177,12 +209,26 @@
         const minDice = 0;
         let currentDiceCount = 0; // Inicialmente 0 dados
         let diceValuesVisible = true;
+        let pageLoaded = false; // Nova flag para controlar se a página carregou
+
+        // Elementos de áudio
+        const rollSound = document.getElementById('rollSound');
+        const removeSound = document.getElementById('removeSound');
+        const addSound = document.getElementById('addSound');
+        const hideSound = document.getElementById('hideSound'); // Novo elemento de áudio para o botão de esconder
+
+        function playSound(audioElement) {
+            audioElement.currentTime = 0; // Reinicia o áudio caso já esteja tocando
+            audioElement.play();
+        }
 
         function updateDiceCounter() {
             diceCounterContainer.innerHTML = '';
-            for (let i = 0; i < currentDiceCount; i++) {
+            const counterValue = maxDice - currentDiceCount;
+            for (let i = 0; i < counterValue; i++) {
                 const point = document.createElement('div');
                 point.classList.add('counter-point');
+                point.innerHTML = '<i class="fas fa-dice-six"></i></i>'; // Adiciona o ícone do dado
                 diceCounterContainer.appendChild(point);
             }
         }
@@ -200,17 +246,20 @@
         }
 
         function rollDice() {
-            const dice = document.querySelectorAll('.die');
-            dice.forEach(die => {
-                die.classList.add('rolling');
-                setTimeout(() => {
-                    die.classList.remove('rolling');
-                    const icon = die.querySelector('i');
-                    const newFace = getRandomDiceFace();
-                    icon.className = 'fas ' + newFace;
-                    updateDiceVisibility(die);
-                }, 500);
-            });
+            if (currentDiceCount > 0) {
+                playSound(rollSound);
+                const dice = document.querySelectorAll('.die');
+                dice.forEach(die => {
+                    die.classList.add('rolling');
+                    setTimeout(() => {
+                        die.classList.remove('rolling');
+                        const icon = die.querySelector('i');
+                        const newFace = getRandomDiceFace();
+                        icon.className = 'fas ' + newFace;
+                        updateDiceVisibility(die);
+                    }, 500);
+                });
+            }
         }
 
         function updateDiceVisibility(die) {
@@ -235,11 +284,13 @@
                 eyeIcon.classList.remove('fa-eye');
                 eyeIcon.classList.add('fa-eye-slash');
             }
+            playSound(hideSound); // Toca o som ao clicar no botão de esconder
         }
 
         function removeDie() {
             const dice = document.querySelectorAll('.die');
             if (dice.length > minDice) {
+                playSound(removeSound);
                 diceContainer.removeChild(dice[dice.length - 1]);
                 currentDiceCount--;
                 updateDiceCounter();
@@ -248,6 +299,9 @@
 
         function addDie() {
             if (currentDiceCount < maxDice) {
+                if (pageLoaded) { // Só toca o som se a página já carregou
+                    playSound(addSound);
+                }
                 const newDie = document.createElement('div');
                 newDie.classList.add('die');
                 newDie.innerHTML = '<i class="fas fa-dice-six"></i>';
@@ -265,8 +319,16 @@
         addBtn.addEventListener('click', addDie);
         hideDiceBtn.addEventListener('click', toggleDiceVisibility);
 
-        // Inicializar o contador de dados
+        // Inicializar o contador corretamente
         updateDiceCounter();
+
+        // Inicializar os dados e definir a flag após o carregamento da página
+        window.onload = function() {
+            for (let i = 0; i < 5; i++) {
+                addDie();
+            }
+            pageLoaded = true;
+        };
     </script>
 </body>
 </html>
