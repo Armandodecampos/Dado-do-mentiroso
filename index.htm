@@ -10,6 +10,18 @@
         body {
 
         }
+        
+        .tela-inicial{
+        display: flex;
+        align-items: center;
+        background: #000;
+        flex-direction: column;
+        padding:10px;
+        padding-top:100px;
+        padding-bottom:100px;
+        background-color: #000000;
+background-image: url("https://www.transparenttextures.com/patterns/black-paper.png");
+        }
         .jogo{
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #111;
@@ -19,10 +31,16 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+background-color: #1d2b00;
+background-image: url("https://www.transparenttextures.com/patterns/pool-table.png");
+display:none;
+        }
+        
+        .sobre-o-jogo{
 background-color: #000000;
-background-image: url("https://www.transparenttextures.com/patterns/binding-light.png");
+background-image: url("https://www.transparenttextures.com/patterns/black-paper.png");
 /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
-
+padding:20px;
         }
 
         .container {
@@ -34,13 +52,6 @@ background-image: url("https://www.transparenttextures.com/patterns/binding-ligh
             align-items: center;
             justify-content: space-between;
             min-height: 100vh; /* Garante que o container ocupe toda a altura */
-            background:#fa0;
-            border-left:3px solid #000;
-            border-right:3px solid #000;
-            background-color: #1d2b00;
-background-image: url("https://www.transparenttextures.com/patterns/pool-table.png");
-/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
-            
         }
 
         .controls-container {
@@ -232,7 +243,87 @@ button:focus {
     </style>
 </head>
 <body>
-<div class="jogo">
+<div class="tela-inicial">
+<div class="sobre-o-jogo">
+    <center><h1 style="color: white; font-family: sans-serif; margin-bottom: 20px;">🎲 Dado do Mentiroso 🎲</h1></center>
+    <br>
+    <div style="max-width: 600px; padding: 20px; color: white; font-family: 'Segoe UI', sans-serif; text-align: center; font-size: 18px; line-height: 1.6;">
+    <h2 style="margin-top: 0;">Sobre o Jogo</h2>
+    <div style="max-width: 800px; color: white; font-family: 'Segoe UI', sans-serif; padding: 20px; text-align: left;">
+  <h2>📖 A História do Dado do Mentiroso</h2>
+  <p>O "Dado do Mentiroso", conhecido também como "Liar's Dice", é um jogo clássico de blefe, estratégia e sorte. Jogadores utilizam dados e copos opacos para esconder seus valores, e tentam adivinhar ou enganar os adversários sobre o que há na mesa. Tornou-se popular por sua dinâmica envolvente e pelo clima de tensão e risadas que proporciona.</p>
+
+  <h2>🎲 Regras</h2>
+  <ul>
+    <li>Cada jogador começa com 5 dados escondidos.</li>
+    <li>É escolhido um jogador de forma aleatória ou outro críterio</li>
+    <li>O jogador faz uma aposta dizendo, por exemplo, "tem pelo menos quatro dados de valor 3 na mesa".</li>
+    <li>O próximo jogador à esquerda pode:
+      <ul>
+        <li>Aumentar a aposta (aumentando a quantidade ou o valor do dado apostado).</li>
+        <li>Dizer "duvido", forçando todos a revelarem os dados.</li>
+        <li>Fazer uma aposta certeira.</li>
+      </ul>
+    </li>
+    <li>Quem errar perde um dado. O último com dados vence.</li>
+  </ul>
+
+  <h2>🎮 As 3 Opções de Jogada</h2>
+
+  <h3>1️⃣ Aumentar a Aposta</h3>
+  <p>Você pode aumentar a aposta do jogador anterior, mas <strong>não pode diminuir a quantidade de dados apostados</strong>, e <strong>não pode repetir o mesmo número de dados com o mesmo valor</strong>. Você deve escolher uma das seguintes opções:</p>
+  <ul>
+    <li>Aumentar a quantidade de dados apostados (ex: de "três dados de 4" para "quatro dados de 4").</li>
+    <li>Aumentar o valor dos dados (ex: de "três dados de 4" para "três dados de 5").</li>
+    <li>Aumentar ambos (ex: de "três dados de 4" para "quatro dados de 5").</li>
+  </ul>
+  <p><em>Importante:</em> A aposta deve sempre ser mais alta do que a anterior, seja em quantidade, valor do dado, ou ambos.</p>
+
+  <h3>2️⃣ Dúvida</h3>
+  <p>Se você acha que o outro jogador está blefando, pode dizer "duvido!". Neste momento, todos revelam seus dados.</p>
+  <ul>
+    <li>Se a quantidade de dados com o valor apostado for <strong>igual ou maior</strong> do que o dito, quem duvidou perde um dado.</li>
+    <li>Se for <strong>menor</strong>, quem fez a aposta incorreta perde um dado.</li>
+  </ul>
+
+  <h3>3️⃣ Aposta Certeira</h3>
+  <p>Essa é uma jogada ousada! O jogador aposta dizendo que há <strong>exatamente</strong> uma certa quantidade de dados com um número específico.</p>
+  <ul>
+    <li>Se estiver <strong>certo</strong>, todos os outros jogadores perdem 1 dado.</li>
+    <li>Se estiver <strong>errado</strong>, o jogador que fez a aposta certeira perde 1 dado.</li>
+  </ul>
+  <p><em>Exemplo:</em> “Acho que tem exatamente cinco dados de número 2 na mesa.” Se tiver <strong>exatamente</strong> cinco, todos perdem um dado — menos você!</p>
+  
+    <h2>📱 Como jogar usando seu celular e este app</h2>
+  <p>Você pode jogar virtualmente usando seu celular, com os dados aparecendo diretamente na tela.
+Os dados que você possui ficam na parte inferior, enquanto os dados perdidos aparecem na parte superior da tela.
+Use o botão 🎲 para rolar os dados, os botões (+) e (−) para adicionar ou remover dados, e o botão 👁️ para esconder ou revelar os valores.
+Cada jogador deve usar seu próprio celular para manter os dados em segredo.
+Você pode deixar o celular sobre a mesa e usar a mão ou um cartão, por exemplo, para cobrir a parte inferior da tela e evitar que o outro jogador veja seus dados.
+Outra opção é segurar o celular de forma que só você consiga ver, mas deixar o volume alto para que todos escutem os sons dos botões — isso ajuda a manter o jogo justo e transparente.</p>
+
+  <h2>Boa sorte e que vença o melhor blefador! 😏🎲</h2>
+  </div>
+</div> 
+</div>
+<br>
+    <button id="startGameBtn" style="
+        padding: 20px 40px;
+        font-size: 24px;
+        font-family: 'Segoe UI', sans-serif;
+        color: white;
+        background: #080;
+        border: none;
+        border-radius: 15px;
+        cursor: pointer;
+        box-shadow: 0 0 15px rgba(0,0,0,0.6);
+        transition: transform 0.2s, box-shadow 0.2s;
+        font-weight:bold;
+    ">
+        Iniciar Jogo 🎲
+    </button>
+    </div>
+<div class="jogo" id="jogo">
     <div class="container">
         <div class="controls-container">
             <div class="controls">
@@ -415,8 +506,6 @@ button:focus {
                 addDie();
             }
             pageLoaded = true;
-            // Toca o som ao carregar a página
-            playSound(pageLoadSound);
         };
 
         // Adiciona animação nos botões
@@ -448,7 +537,20 @@ button:focus {
         });
 
         observer.observe(diceCounterContainer, { childList: true, subtree: true });
+        
+        // Abre o jogo
+        const startGameBtn = document.getElementById('startGameBtn');
+const telaInicial = document.querySelector('.tela-inicial');
+const jogoDiv = document.querySelector('.jogo');
+
+startGameBtn.addEventListener('click', () => {
+    telaInicial.style.display = 'none';
+    jogoDiv.style.display = 'flex';
+	playSound(pageLoadSound);
+});
     </script>
+    
+    </div>
     </div>
 </body>
 </html>
