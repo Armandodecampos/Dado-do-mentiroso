@@ -8,14 +8,21 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
+
+        }
+        .jogo{
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #222;
+            background-color: #111;
             margin: 0;
             min-height: 100vh;
             position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
+background-color: #000000;
+background-image: url("https://www.transparenttextures.com/patterns/binding-light.png");
+/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+
         }
 
         .container {
@@ -27,17 +34,13 @@
             align-items: center;
             justify-content: space-between;
             min-height: 100vh; /* Garante que o container ocupe toda a altura */
-        }
-
-        .middle-separator {
-            position: fixed; /* Fixa a linha na viewport */
-            top: 50%; /* Posiciona o topo da linha no meio da viewport */
-            left: 0;
-            width: 100%;
-            height: 1px;
-            background-color: white;
-            transform: translateY(-50%); /* Ajusta a linha para que o centro dela fique no meio */
-            z-index: 5; /* Garante que a linha fique abaixo dos controles e dados, se necessário */
+            background:#fa0;
+            border-left:3px solid #000;
+            border-right:3px solid #000;
+            background-color: #1d2b00;
+background-image: url("https://www.transparenttextures.com/patterns/pool-table.png");
+/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+            
         }
 
         .controls-container {
@@ -219,9 +222,17 @@
                 transition: background-color 0.3s ease, filter 0.3s ease;
                 box-shadow: 0 0px 10px rgba(0, 0, 0, 1);
     }
+    button {
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+}
+button:focus {
+    outline: none;
+}
     </style>
 </head>
 <body>
+<div class="jogo">
     <div class="container">
         <div class="controls-container">
             <div class="controls">
@@ -240,7 +251,6 @@
             </div>
         </div>
     </div>
-    <div class="middle-separator"></div>
     <div class="container">
         <div class="dice-area">
             <div class="dice-container">
@@ -255,7 +265,7 @@
     <audio id="rollSound" src="https://dl.dropbox.com/scl/fi/lawmyuvtabr6nybkd4f6t/jogar-dados.mp3?rlkey=evl8egxa4w0ennfguprqngoy3&st=68x60hc3&dl=0"></audio>
     <audio id="removeSound" src="https://dl.dropbox.com/scl/fi/74y42ahz7m5vsh6xzuyhj/tap-notification-180637.mp3?rlkey=nzxmoqd8s0l4avnc49aiqj840&st=h9uqk0ev&dl=0"></audio>
     <audio id="addSound" src="https://dl.dropbox.com/scl/fi/ahl7p9asseldt95f9s408/correct-choice-43861.mp3?rlkey=3iy41q71iumgnuqca7los24zu&st=mj1v4i7j&dl=0"></audio>
-    <audio id="pageLoadSound" src="https://dl.dropbox.com/scl/fi/xvxq5dlhobkpjckzhub7z/rapid-wind-sound-effect-2-108400.mp3?rlkey=fixzfbivofazenalmkgh7dqh9&st=8ng2ig00&dl=0"></audio>
+    <audio id="pageLoadSound" src="https://dl.dropbox.com/scl/fi/ahl7p9asseldt95f9s408/correct-choice-43861.mp3?rlkey=3iy41q71iumgnuqca7los24zu&st=mj1v4i7j&dl=0"></audio>
     <audio id="hideSound" src="https://dl.dropbox.com/scl/fi/xvxq5dlhobkpjckzhub7z/rapid-wind-sound-effect-2-108400.mp3?rlkey=fixzfbivofazenalmkgh7dqh9&st=iewwoho9&dl=0"></audio>
 
     <script>
@@ -414,7 +424,7 @@
 
         const keyframes = [
             { filter: 'brightness(1)' },
-            { filter: 'brightness(0.5)' },
+            { filter: 'brightness(0.2)' },
             { filter: 'brightness(1)' }
         ];
 
@@ -439,5 +449,6 @@
 
         observer.observe(diceCounterContainer, { childList: true, subtree: true });
     </script>
+    </div>
 </body>
 </html>
