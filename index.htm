@@ -12,8 +12,11 @@
   padding: 0;
   width: 100%;
   height: 100%;
-  overflow-x: hidden; /* Evita que a tela "vaze" horizontalmente */
+  overflow: hidden;
         }
+        
+        
+        
         h2 {
             color: #555;
             border-bottom: 2px solid #ccc;
@@ -55,10 +58,16 @@
         background-color: #000000;
 background-image: url("https://www.transparenttextures.com/patterns/black-paper.png");
         }
+        
         .jogo{
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #111;
+            position:fixed;
             margin: 0;
+            top:0;
+            bottom:0;
+            overflow: hidden;
+            left:0;
+            right:0;
             min-height: 100vh;
             position: relative;
             display: flex;
@@ -334,15 +343,17 @@ padding: 15px;
 
 .tela-inicial-Btn{
 position:fixed;
-bottom:10px;
-left:10px;
-padding: 7px;
-        font-size: 20px;
+bottom:15px;
+left:15px;
+width:50px;
+height:50px;
+padding: 10px;
+        font-size: 25px;
         font-family: 'Segoe UI', sans-serif;
         color: white;
         background: #080;
         border: none;
-        border-radius: 15px;
+        border-radius: 50px;
         cursor: pointer;
         box-shadow: 0 0 15px rgba(0,0,0,0.6);
         transition: transform 0.2s, box-shadow 0.2s;
@@ -365,15 +376,15 @@ padding: 7px;
         Como jogar 🎲
     </button>
     </center>
+    </div>
     <br>
     <div class="container-sobre-o-jogo">
     <div class="sobre-o-jogo" id="sobre-o-jogo">
-    <h2 style="margin-top: 0;">Sobre o Jogo</h2>
     <div style="max-width: 800px; color: white; font-family: 'Segoe UI', sans-serif; padding: 20px; text-align: left;">
-  <h2>📖 A História do Dado do Mentiroso</h2>
+  <h2>📖 Sobre o Jogo</h2>
 <p>A história do "Dado do Mentiroso", também conhecido como "Liar's Dice", não tem uma origem única, mas evoluiu de jogos de dados com elementos de adivinhação e blefe. Provavelmente surgiu na América Latina e se espalhou globalmente através de intercâmbios culturais e marítimos. Sua popularidade duradoura vem da combinação de sorte e estratégia psicológica, tornando-o um jogo socialmente envolvente e emocionante. Os jogadores usam dados e copos opacos para esconder seus resultados e tentam adivinhar ou enganar os outros sobre o que foi rolado.</p>
 
-<h2>Objetivo do Jogo</h2>
+<h2>🎯 Objetivo do Jogo</h2>
 <p>O objetivo principal do "Dado do Mentiroso" é <strong>ser o último jogador com dados</strong>.</p>
 <p>Este jogo testa a perspicácia dos participantes, que precisam blefar sobre os resultados de seus dados combinados e questionar a veracidade das afirmações dos outros. É uma mistura de blefe estratégico, dedução e sorte.</p>
 
@@ -413,14 +424,13 @@ padding: 7px;
 <h2>📱 Como jogar usando seu celular e este app</h2>
 <p>Você pode jogar virtualmente no seu celular: seus dados aparecem na parte inferior da tela e os dados perdidos, na superior. Use o botão 🎲 para rolar os dados, os botões (+) e (−) para adicionar ou remover dados, e o botão 👁️ para esconder ou mostrar os valores. Cada jogador deve manter seus dados secretos no próprio celular. Para evitar que outros vejam seus dados, você pode deixar o celular na mesa e cobrir a parte inferior com a mão ou um cartão. Outra opção é segurar o celular de forma que só você veja, mas deixe o volume alto para que todos ouçam os sons dos botões, garantindo um jogo justo e transparente.</p>
 
-<h2>Boa sorte e que vença o melhor blefador! 😏🎲</h2>
+<h2>Boa sorte e que vença o melhor blefador! 🎲</h2>
   <button class="tela-inicial-Btn" onclick="voltarTelaInicial()">
   <i class="fas fa-home"></i>
 </button>
 </div> 
 </div>
 </div> 
-    </div>
 <div class="jogo" id="jogo">
     <div class="container">
         <div class="controls-container">
