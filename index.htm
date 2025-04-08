@@ -8,17 +8,50 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
-
+              margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden; /* Evita que a tela "vaze" horizontalmente */
+        }
+        h2 {
+            color: #555;
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 5px;
+            margin-top: 25px;
+        }
+        h3 {
+            color: #777;
+            margin-top: 20px;
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+        strong {
+            color: #007bff;
+        }
+        em {
+            font-style: italic;
+            color: #6c757d;
+        }
+        p {
+            margin-bottom: 15px;
         }
         
         .tela-inicial{
+        position:fixed;
+        top:0;
+        bottom:0;
+        left:0;
+        right:0;
         display: flex;
-        align-items: center;
-        background: #000;
-        flex-direction: column;
-        padding:10px;
-        padding-top:100px;
-        padding-bottom:100px;
+    align-items: center;
+    justify-content: center; /* Adicione esta linha */
+    flex-direction: column;
+    padding: 10px;
+    padding-top: 100px;
+    padding-bottom: 100px;
         background-color: #000000;
 background-image: url("https://www.transparenttextures.com/patterns/black-paper.png");
         }
@@ -36,11 +69,41 @@ background-image: url("https://www.transparenttextures.com/patterns/pool-table.p
 display:none;
         }
         
-        .sobre-o-jogo{
+        .container-sobre-o-jogo{
+        display:none;
+        position:fixed;
+        z-index:2;
+        margin:auto;
+        top:0;
+        bottom:0;
+        left:0;
+        right:0;
+        padding-bottom:100px;
+        overflow-y:scroll;
 background-color: #000000;
 background-image: url("https://www.transparenttextures.com/patterns/black-paper.png");
+        }
+        
+        /* Scroll simples em preto e branco */
+.container-sobre-o-jogo::-webkit-scrollbar {
+    width: 6px;
+}
+
+.container-sobre-o-jogo::-webkit-scrollbar-thumb {
+    background: white;
+}
+
+.container-sobre-o-jogo::-webkit-scrollbar-track {
+    background: black;
+}
+
+
+
+        
+        .sobre-o-jogo{
+margin:auto; left:0;right;0;max-width: 600px; padding: 20px; color: white; font-family: 'Segoe UI', sans-serif; text-align: center; font-size: 18px; line-height: 1.6;
 /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
-padding:20px;
+
         }
 
         .container {
@@ -240,75 +303,9 @@ padding:20px;
 button:focus {
     outline: none;
 }
-    </style>
-</head>
-<body>
-<div class="tela-inicial">
-<div class="sobre-o-jogo">
-    <center><h1 style="color: white; font-family: sans-serif; margin-bottom: 20px;">🎲 Dado do Mentiroso 🎲</h1></center>
-    <br>
-    <div style="max-width: 600px; padding: 20px; color: white; font-family: 'Segoe UI', sans-serif; text-align: center; font-size: 18px; line-height: 1.6;">
-    <h2 style="margin-top: 0;">Sobre o Jogo</h2>
-    <div style="max-width: 800px; color: white; font-family: 'Segoe UI', sans-serif; padding: 20px; text-align: left;">
-  <h2>📖 A História do Dado do Mentiroso</h2>
-  <p>O "Dado do Mentiroso", conhecido também como "Liar's Dice", é um jogo clássico de blefe, estratégia e sorte. Jogadores utilizam dados e copos opacos para esconder seus valores, e tentam adivinhar ou enganar os adversários sobre o que há na mesa. Tornou-se popular por sua dinâmica envolvente e pelo clima de tensão e risadas que proporciona.</p>
 
-  <h2>🎲 Regras</h2>
-  <ul>
-    <li>Cada jogador começa com 5 dados escondidos.</li>
-    <li>É escolhido um jogador de forma aleatória ou outro críterio</li>
-    <li>O jogador faz uma aposta dizendo, por exemplo, "tem pelo menos quatro dados de valor 3 na mesa".</li>
-    <li>O próximo jogador à esquerda pode:
-      <ul>
-        <li>Aumentar a aposta (aumentando a quantidade ou o valor do dado apostado).</li>
-        <li>Dizer "duvido", forçando todos a revelarem os dados.</li>
-        <li>Fazer uma aposta certeira.</li>
-      </ul>
-    </li>
-    <li>Quem errar perde um dado. O último com dados vence.</li>
-  </ul>
-
-  <h2>🎮 As 3 Opções de Jogada</h2>
-
-  <h3>1️⃣ Aumentar a Aposta</h3>
-  <p>Você pode aumentar a aposta do jogador anterior, mas <strong>não pode diminuir a quantidade de dados apostados</strong>, e <strong>não pode repetir o mesmo número de dados com o mesmo valor</strong>. Você deve escolher uma das seguintes opções:</p>
-  <ul>
-    <li>Aumentar a quantidade de dados apostados (ex: de "três dados de 4" para "quatro dados de 4").</li>
-    <li>Aumentar o valor dos dados (ex: de "três dados de 4" para "três dados de 5").</li>
-    <li>Aumentar ambos (ex: de "três dados de 4" para "quatro dados de 5").</li>
-  </ul>
-  <p><em>Importante:</em> A aposta deve sempre ser mais alta do que a anterior, seja em quantidade, valor do dado, ou ambos.</p>
-
-  <h3>2️⃣ Dúvida</h3>
-  <p>Se você acha que o outro jogador está blefando, pode dizer "duvido!". Neste momento, todos revelam seus dados.</p>
-  <ul>
-    <li>Se a quantidade de dados com o valor apostado for <strong>igual ou maior</strong> do que o dito, quem duvidou perde um dado.</li>
-    <li>Se for <strong>menor</strong>, quem fez a aposta incorreta perde um dado.</li>
-  </ul>
-
-  <h3>3️⃣ Aposta Certeira</h3>
-  <p>Essa é uma jogada ousada! O jogador aposta dizendo que há <strong>exatamente</strong> uma certa quantidade de dados com um número específico.</p>
-  <ul>
-    <li>Se estiver <strong>certo</strong>, todos os outros jogadores perdem 1 dado.</li>
-    <li>Se estiver <strong>errado</strong>, o jogador que fez a aposta certeira perde 1 dado.</li>
-  </ul>
-  <p><em>Exemplo:</em> “Acho que tem exatamente cinco dados de número 2 na mesa.” Se tiver <strong>exatamente</strong> cinco, todos perdem um dado — menos você!</p>
-  
-    <h2>📱 Como jogar usando seu celular e este app</h2>
-  <p>Você pode jogar virtualmente usando seu celular, com os dados aparecendo diretamente na tela.
-Os dados que você possui ficam na parte inferior, enquanto os dados perdidos aparecem na parte superior da tela.
-Use o botão 🎲 para rolar os dados, os botões (+) e (−) para adicionar ou remover dados, e o botão 👁️ para esconder ou revelar os valores.
-Cada jogador deve usar seu próprio celular para manter os dados em segredo.
-Você pode deixar o celular sobre a mesa e usar a mão ou um cartão, por exemplo, para cobrir a parte inferior da tela e evitar que o outro jogador veja seus dados.
-Outra opção é segurar o celular de forma que só você consiga ver, mas deixar o volume alto para que todos escutem os sons dos botões — isso ajuda a manter o jogo justo e transparente.</p>
-
-  <h2>Boa sorte e que vença o melhor blefador! 😏🎲</h2>
-  </div>
-</div> 
-</div>
-<br>
-    <button id="startGameBtn" style="
-        padding: 20px 40px;
+.startGameBtn{
+padding: 20px 40px;
         font-size: 24px;
         font-family: 'Segoe UI', sans-serif;
         color: white;
@@ -319,9 +316,110 @@ Outra opção é segurar o celular de forma que só você consiga ver, mas deixa
         box-shadow: 0 0 15px rgba(0,0,0,0.6);
         transition: transform 0.2s, box-shadow 0.2s;
         font-weight:bold;
-    ">
+}
+
+.comojogar{
+padding: 15px;
+        font-size: 18px;
+        font-family: 'Segoe UI', sans-serif;
+        color: white;
+        background: #333;
+        border: none;
+        border-radius: 15px;
+        cursor: pointer;
+        box-shadow: 0 0 15px rgba(0,0,0,0.6);
+        transition: transform 0.2s, box-shadow 0.2s;
+        font-weight:bold;
+}
+
+.tela-inicial-Btn{
+position:fixed;
+bottom:10px;
+left:10px;
+padding: 7px;
+        font-size: 20px;
+        font-family: 'Segoe UI', sans-serif;
+        color: white;
+        background: #080;
+        border: none;
+        border-radius: 15px;
+        cursor: pointer;
+        box-shadow: 0 0 15px rgba(0,0,0,0.6);
+        transition: transform 0.2s, box-shadow 0.2s;
+        font-weight:bold;
+}
+    </style>
+</head>
+<body>
+<div class="tela-inicial">
+    <center><h1 style="color: white; font-family: sans-serif; margin-bottom: 20px;">Dado do Mentiroso</h1>
+    <br>
+    <h1>🎲🎲🎲🎲🎲</h1>
+    <br>
+    <button class="startGameBtn" id="startGameBtn">
         Iniciar Jogo 🎲
     </button>
+    <br>
+    <br>
+    <button class="comojogar" id="abresobreojogo">
+        Como jogar 🎲
+    </button>
+    </center>
+    <br>
+    <div class="container-sobre-o-jogo">
+    <div class="sobre-o-jogo" id="sobre-o-jogo">
+    <h2 style="margin-top: 0;">Sobre o Jogo</h2>
+    <div style="max-width: 800px; color: white; font-family: 'Segoe UI', sans-serif; padding: 20px; text-align: left;">
+  <h2>📖 A História do Dado do Mentiroso</h2>
+<p>A história do "Dado do Mentiroso", também conhecido como "Liar's Dice", não tem uma origem única, mas evoluiu de jogos de dados com elementos de adivinhação e blefe. Provavelmente surgiu na América Latina e se espalhou globalmente através de intercâmbios culturais e marítimos. Sua popularidade duradoura vem da combinação de sorte e estratégia psicológica, tornando-o um jogo socialmente envolvente e emocionante. Os jogadores usam dados e copos opacos para esconder seus resultados e tentam adivinhar ou enganar os outros sobre o que foi rolado.</p>
+
+<h2>Objetivo do Jogo</h2>
+<p>O objetivo principal do "Dado do Mentiroso" é <strong>ser o último jogador com dados</strong>.</p>
+<p>Este jogo testa a perspicácia dos participantes, que precisam blefar sobre os resultados de seus dados combinados e questionar a veracidade das afirmações dos outros. É uma mistura de blefe estratégico, dedução e sorte.</p>
+
+<h2>🎲 Regras</h2>
+<ul>
+    <li>Cada jogador começa com 5 dados.</li>
+    <li>Os jogadores lançam seus dados e os escondem com um copo, mão ou outro método, de forma que os outros não vejam.</li>
+    <li>Um jogador inicial é escolhido aleatoriamente.</li>
+    <li>O jogador inicial (vamos supor que seja o da sua direita) faz uma aposta, dizendo, por exemplo: "Há pelo menos três dados de valor 4 na mesa".</li>
+    <li>O próximo jogador (você, neste caso) pode:</li>
+</ul>
+
+<h3>1️⃣ Aumentar a Aposta</h3>
+<p>Você pode aumentar a aposta anterior, mas <strong>não pode diminuir o número de dados apostados</strong> nem <strong>repetir o mesmo número de dados com o mesmo valor</strong>. Escolha uma das seguintes opções:</p>
+<ul>
+    <li>Aumentar o número de dados (ex: de "três dados de 4" para "quatro dados de 4").</li>
+    <li>Aumentar o valor dos dados (ex: de "três dados de 4" para "três dados de 5").</li>
+    <li>Aumentar ambos (ex: de "três dados de 4" para "quatro dados de 5").</li>
+</ul>
+<p><em>Importante:</em> A nova aposta deve ser sempre maior que a anterior em quantidade, valor ou ambos.</p>
+
+<h3>2️⃣ Duvidar</h3>
+<p>Se você acredita que o jogador anterior está blefando, diga "Duvido!". Todos revelam seus dados imediatamente.</p>
+<ul>
+    <li>Se o número de dados com o valor apostado for <strong>igual ou maior</strong> que o declarado, você perde um dado por duvidar.</li>
+    <li>Se o número for <strong>menor</strong>, o jogador que fez a aposta perde um dado por blefar.</li>
+</ul>
+
+<h3>3️⃣ Apostar na Quantidade Exata</h3>
+<p>Esta é uma jogada arriscada! Você concorda com a aposta anterior, apostando que há <strong>exatamente</strong> aquela quantidade de dados com o valor especificado.</p>
+<ul>
+    <li>Se você estiver <strong>certo</strong>, todos os outros jogadores perdem 1 dado.</li>
+    <li>Se estiver <strong>errado</strong>, você perde 1 dado.</li>
+</ul>
+<p><em>Exemplo:</em> “Acho que há exatamente cinco dados de número 2 na mesa.” Se houver exatamente cinco dados de número 2, todos perdem um dado, exceto você!</p>
+
+<h2>📱 Como jogar usando seu celular e este app</h2>
+<p>Você pode jogar virtualmente no seu celular: seus dados aparecem na parte inferior da tela e os dados perdidos, na superior. Use o botão 🎲 para rolar os dados, os botões (+) e (−) para adicionar ou remover dados, e o botão 👁️ para esconder ou mostrar os valores. Cada jogador deve manter seus dados secretos no próprio celular. Para evitar que outros vejam seus dados, você pode deixar o celular na mesa e cobrir a parte inferior com a mão ou um cartão. Outra opção é segurar o celular de forma que só você veja, mas deixe o volume alto para que todos ouçam os sons dos botões, garantindo um jogo justo e transparente.</p>
+
+<h2>Boa sorte e que vença o melhor blefador! 😏🎲</h2>
+  <button class="tela-inicial-Btn" onclick="voltarTelaInicial()">
+  <i class="fas fa-home"></i>
+</button>
+</div> 
+</div>
+</div> 
     </div>
 <div class="jogo" id="jogo">
     <div class="container">
@@ -351,6 +449,9 @@ Outra opção é segurar o celular de forma que só você consiga ver, mas deixa
                 <i class="fas fa-eye"></i>
             </button>
         </div>
+        <button class="tela-inicial-Btn" onclick="voltarTelaInicial()">
+  <i class="fas fa-home"></i>
+</button>
     </div>
 
     <audio id="rollSound" src="https://dl.dropbox.com/scl/fi/lawmyuvtabr6nybkd4f6t/jogar-dados.mp3?rlkey=evl8egxa4w0ennfguprqngoy3&st=68x60hc3&dl=0"></audio>
@@ -542,15 +643,39 @@ Outra opção é segurar o celular de forma que só você consiga ver, mas deixa
         const startGameBtn = document.getElementById('startGameBtn');
 const telaInicial = document.querySelector('.tela-inicial');
 const jogoDiv = document.querySelector('.jogo');
+const containersobreojogo = document.querySelector('.container-sobre-o-jogo');
+const abresobreojogo = document.getElementById('abresobreojogo');
 
 startGameBtn.addEventListener('click', () => {
     telaInicial.style.display = 'none';
     jogoDiv.style.display = 'flex';
 	playSound(pageLoadSound);
 });
+
+abresobreojogo.addEventListener('click', () => {
+
+    containersobreojogo.style.display = 'block';
+});
+
+
+
+
+
+//voltar a tela inicial
+function voltarTelaInicial() {
+    // Oculta a div do jogo
+    document.getElementById('jogo').style.display = 'none';
+
+    // Mostra a tela inicial
+    const telaInicial = document.querySelector('.tela-inicial');
+    telaInicial.style.display = 'flex';
+    containersobreojogo.style.display = 'none';
+    telaInicial.style.justifyContent = 'center'; // Isso garante centralização horizontal
+}
+
     </script>
     
     </div>
-    </div>
+ 
 </body>
 </html>
