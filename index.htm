@@ -8,15 +8,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
-              margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
         }
-        
-        
-        
+
+
         h2 {
             color: #555;
             border-bottom: 2px solid #ccc;
@@ -41,7 +40,7 @@
         p {
             margin-bottom: 15px;
         }
-        
+
         .tela-inicial{
         position:fixed;
         top:0;
@@ -58,7 +57,7 @@
         background-color: #000000;
 background-image: url("https://www.transparenttextures.com/patterns/black-paper.png");
         }
-        
+
         .jogo{
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             position:fixed;
@@ -77,7 +76,7 @@ background-color: #1d2b00;
 background-image: url("https://www.transparenttextures.com/patterns/pool-table.png");
 display:none;
         }
-        
+
         .container-sobre-o-jogo{
         display:none;
         position:fixed;
@@ -92,7 +91,7 @@ display:none;
 background-color: #000000;
 background-image: url("https://www.transparenttextures.com/patterns/black-paper.png");
         }
-        
+
         /* Scroll simples em preto e branco */
 .container-sobre-o-jogo::-webkit-scrollbar {
     width: 6px;
@@ -108,7 +107,6 @@ background-image: url("https://www.transparenttextures.com/patterns/black-paper.
 
 
 
-        
         .sobre-o-jogo{
 margin:auto; left:0;right;0;max-width: 600px; padding: 20px; color: white; font-family: 'Segoe UI', sans-serif; text-align: center; font-size: 18px; line-height: 1.6;
 /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
@@ -158,6 +156,7 @@ margin:auto; left:0;right;0;max-width: 600px; padding: 20px; color: white; font-
         .dice-counter {
             display: flex;
             gap: 25px;
+            position: relative; /* Para posicionar os pontos de forma absoluta */
         }
 
         .counter-point {
@@ -211,6 +210,7 @@ margin:auto; left:0;right;0;max-width: 600px; padding: 20px; color: white; font-
         .dice-container {
             display: flex;
             gap: 25px;
+            position: relative; /* Para posicionar os dados de forma absoluta */
         }
 
         .die {
@@ -381,7 +381,7 @@ padding: 10px;
     <div class="container-sobre-o-jogo">
     <div class="sobre-o-jogo" id="sobre-o-jogo">
     <div style="max-width: 800px; color: white; font-family: 'Segoe UI', sans-serif; padding: 20px; text-align: left;">
-  <h2>📖 Sobre o Jogo</h2>
+    <h2>📖 Sobre o Jogo</h2>
 <p>A história do "Dado do Mentiroso", também conhecido como "Liar's Dice", não tem uma origem única, mas evoluiu de jogos de dados com elementos de adivinhação e blefe. Provavelmente surgiu na América Latina e se espalhou globalmente através de intercâmbios culturais e marítimos. Sua popularidade duradoura vem da combinação de sorte e estratégia psicológica, tornando-o um jogo socialmente envolvente e emocionante. Os jogadores usam dados e copos opacos para esconder seus resultados e tentam adivinhar ou enganar os outros sobre o que foi rolado.</p>
 
 <h2>🎯 Objetivo do Jogo</h2>
@@ -425,12 +425,12 @@ padding: 10px;
 <p>Você pode jogar virtualmente no seu celular: seus dados aparecem na parte inferior da tela e os dados perdidos, na superior. Use o botão 🎲 para rolar os dados, os botões (+) e (−) para adicionar ou remover dados, e o botão 👁️ para esconder ou mostrar os valores. Cada jogador deve manter seus dados secretos no próprio celular. Para evitar que outros vejam seus dados, você pode deixar o celular na mesa e cobrir a parte inferior com a mão ou um cartão. Outra opção é segurar o celular de forma que só você veja, mas deixe o volume alto para que todos ouçam os sons dos botões, garantindo um jogo justo e transparente.</p>
 
 <h2>Boa sorte e que vença o melhor blefador! 🎲</h2>
-  <button class="tela-inicial-Btn" id="tela-inicial-Btn2" onclick="voltarTelaInicial()">
-  <i class="fas fa-home"></i>
+    <button class="tela-inicial-Btn" id="tela-inicial-Btn2" onclick="voltarTelaInicial()">
+    <i class="fas fa-home"></i>
 </button>
-</div> 
 </div>
-</div> 
+</div>
+</div>
 <div class="jogo" id="jogo">
     <div class="container">
         <div class="controls-container">
@@ -460,7 +460,7 @@ padding: 10px;
             </button>
         </div>
         <button class="tela-inicial-Btn" id="tela-inicial-Btn" onclick="voltarTelaInicial()">
-  <i class="fas fa-home"></i>
+<i class="fas fa-home"></i>
 </button>
     </div>
 
@@ -481,10 +481,10 @@ padding: 10px;
         const diceCounterContainer = document.getElementById('diceCounter');
         const diceArea = document.querySelector('.dice-area');
         const startGameBtn = document.getElementById('startGameBtn');
-		const telaInicial = document.querySelector('.tela-inicial');
-		const jogoDiv = document.querySelector('.jogo');
-		const containersobreojogo = document.querySelector('.container-sobre-o-jogo');
-		const abresobreojogo = document.getElementById('abresobreojogo');
+        const telaInicial = document.querySelector('.tela-inicial');
+        const jogoDiv = document.querySelector('.jogo');
+        const containersobreojogo = document.querySelector('.container-sobre-o-jogo');
+        const abresobreojogo = document.getElementById('abresobreojogo');
         const maxDice = 5;
         const minDice = 0;
         let currentDiceCount = 0; // Inicialmente 0 dados
@@ -519,16 +519,21 @@ padding: 10px;
         }
 
         function updateDiceCounter() {
-            diceCounterContainer.innerHTML = '';
-            const counterValue = maxDice - currentDiceCount;
-            for (let i = 0; i < counterValue; i++) {
-                const point = document.createElement('div');
-                point.classList.add('counter-point');
-                point.innerHTML = '<i class="fas fa-dice-six"></i></i>'; // Adiciona o ícone do dado
-                diceCounterContainer.appendChild(point);
-            }
-            updateButtonColors(); // Atualiza as cores dos botões ao alterar a contagem
-        }
+    diceCounterContainer.innerHTML = '';
+    const counterValue = maxDice - currentDiceCount;
+    for (let i = 0; i < counterValue; i++) {
+        const point = document.createElement('div');
+        point.classList.add('counter-point');
+        point.innerHTML = '<i class="fas fa-dice-six"></i></i>'; // Adiciona o ícone do dado
+        // Aplica um pequeno deslocamento aleatório com transform
+        const offsetX = Math.floor(Math.random() * 5) + 1;
+        const offsetY = Math.floor(Math.random() * 3) - 1; // Deslocamento vertical menor
+        const signX = Math.random() < 0.5 ? 1 : -1;
+        point.style.transform = `translate(${signX * offsetX}px, ${offsetY}px)`;
+        diceCounterContainer.appendChild(point);
+    }
+    updateButtonColors(); // Atualiza as cores dos botões ao alterar a contagem
+}
 
         function getRandomDiceFace() {
             const faces = [
@@ -543,21 +548,27 @@ padding: 10px;
         }
 
         function rollDice() {
-            if (currentDiceCount > 0) {
-                playSound(rollSound);
-                const dice = document.querySelectorAll('.die');
-                dice.forEach(die => {
-                    die.classList.add('rolling');
-                    setTimeout(() => {
-                        die.classList.remove('rolling');
-                        const icon = die.querySelector('i');
-                        const newFace = getRandomDiceFace();
-                        icon.className = 'fas ' + newFace;
-                        updateDiceVisibility(die);
-                    }, 500);
-                });
-            }
-        }
+    if (currentDiceCount > 0) {
+        playSound(rollSound);
+        const dice = document.querySelectorAll('.die');
+        dice.forEach(die => {
+            die.classList.add('rolling');
+            setTimeout(() => {
+                die.classList.remove('rolling');
+                const icon = die.querySelector('i');
+                const newFace = getRandomDiceFace();
+                icon.className = 'fas ' + newFace;
+                updateDiceVisibility(die);
+
+                // Aplica um deslocamento aleatório ao rolar
+                const randomX = Math.floor(Math.random() * 20) - 10; // Deslocamento horizontal entre -10 e 10 pixels
+                const randomY = Math.floor(Math.random() * 20) - 10; // Deslocamento vertical entre -10 e 10 pixels
+                die.style.transform = `translate(${randomX}px, ${randomY}px)`;
+
+            }, 500);
+        });
+    }
+}
 
         function updateDiceVisibility(die) {
             if (!diceValuesVisible) {
@@ -595,21 +606,26 @@ padding: 10px;
         }
 
         function addDie() {
-            if (currentDiceCount < maxDice) {
-                if (pageLoaded) { // Só toca o som se a página já carregou
-                    playSound(addSound);
-                }
-                const newDie = document.createElement('div');
-                newDie.classList.add('die');
-                newDie.innerHTML = '<i class="fas fa-dice-six"></i>';
-                diceContainer.appendChild(newDie);
-                currentDiceCount++;
-                updateDiceCounter();
-
-                // Aplica a visibilidade ao novo dado
-                updateDiceVisibility(newDie);
-            }
+    if (currentDiceCount < maxDice) {
+        if (pageLoaded) { // Só toca o som se a página já carregou
+            playSound(addSound);
         }
+        const newDie = document.createElement('div');
+        newDie.classList.add('die');
+        newDie.innerHTML = '<i class="fas fa-dice-six"></i>';
+        // Aplica um pequeno deslocamento aleatório com transform
+        const offsetX = Math.floor(Math.random() * 5) + 1;
+        const offsetY = Math.floor(Math.random() * 3) - 1; // Deslocamento vertical menor
+        const signX = Math.random() < 0.5 ? 1 : -1;
+        newDie.style.transform = `translate(${signX * offsetX}px, ${offsetY}px)`;
+        diceContainer.appendChild(newDie);
+        currentDiceCount++;
+        updateDiceCounter();
+
+        // Aplica a visibilidade ao novo dado
+        updateDiceVisibility(newDie);
+    }
+}
 
         rollBtn.addEventListener('click', rollDice);
         removeBtn.addEventListener('click', removeDie);
@@ -656,13 +672,13 @@ padding: 10px;
         });
 
         observer.observe(diceCounterContainer, { childList: true, subtree: true });
-        
+
         // Abre o jogo
 
 startGameBtn.addEventListener('click', () => {
     telaInicial.style.display = 'none';
     jogoDiv.style.display = 'flex';
-	playSound(pageLoadSound);
+    playSound(pageLoadSound);
 });
 
 abresobreojogo.addEventListener('click', () => {
@@ -684,14 +700,14 @@ function voltarTelaInicial() {
     telaInicial.style.display = 'flex';
     containersobreojogo.style.display = 'none';
     telaInicial.style.justifyContent = 'center'; // Isso garante centralização horizontal
-    
+
 }
 
 //adiciona som aos botoes de casa e sobre o jogo
 function tocarSom() {
-  // Garante que o som seja tocado do início toda vez
-  somClique.currentTime = 0;
-  somClique.play();
+    // Garante que o som seja tocado do início toda vez
+    somClique.currentTime = 0;
+    somClique.play();
 }
 
 document.getElementById("abresobreojogo").addEventListener("click", tocarSom);
@@ -700,8 +716,8 @@ document.getElementById("tela-inicial-Btn2").addEventListener("click", tocarSom)
 
 
     </script>
-    
+
     </div>
- 
+
 </body>
 </html>
