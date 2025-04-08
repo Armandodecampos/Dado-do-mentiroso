@@ -425,7 +425,7 @@ padding: 10px;
 <p>Você pode jogar virtualmente no seu celular: seus dados aparecem na parte inferior da tela e os dados perdidos, na superior. Use o botão 🎲 para rolar os dados, os botões (+) e (−) para adicionar ou remover dados, e o botão 👁️ para esconder ou mostrar os valores. Cada jogador deve manter seus dados secretos no próprio celular. Para evitar que outros vejam seus dados, você pode deixar o celular na mesa e cobrir a parte inferior com a mão ou um cartão. Outra opção é segurar o celular de forma que só você veja, mas deixe o volume alto para que todos ouçam os sons dos botões, garantindo um jogo justo e transparente.</p>
 
 <h2>Boa sorte e que vença o melhor blefador! 🎲</h2>
-  <button class="tela-inicial-Btn" onclick="voltarTelaInicial()">
+  <button class="tela-inicial-Btn" id="tela-inicial-Btn2" onclick="voltarTelaInicial()">
   <i class="fas fa-home"></i>
 </button>
 </div> 
@@ -459,16 +459,18 @@ padding: 10px;
                 <i class="fas fa-eye"></i>
             </button>
         </div>
-        <button class="tela-inicial-Btn" onclick="voltarTelaInicial()">
+        <button class="tela-inicial-Btn" id="tela-inicial-Btn" onclick="voltarTelaInicial()">
   <i class="fas fa-home"></i>
 </button>
     </div>
 
-    <audio id="rollSound" src="https://dl.dropbox.com/scl/fi/lawmyuvtabr6nybkd4f6t/jogar-dados.mp3?rlkey=evl8egxa4w0ennfguprqngoy3&st=68x60hc3&dl=0"></audio>
-    <audio id="removeSound" src="https://dl.dropbox.com/scl/fi/74y42ahz7m5vsh6xzuyhj/tap-notification-180637.mp3?rlkey=nzxmoqd8s0l4avnc49aiqj840&st=h9uqk0ev&dl=0"></audio>
-    <audio id="addSound" src="https://dl.dropbox.com/scl/fi/ahl7p9asseldt95f9s408/correct-choice-43861.mp3?rlkey=3iy41q71iumgnuqca7los24zu&st=mj1v4i7j&dl=0"></audio>
-    <audio id="pageLoadSound" src="https://dl.dropbox.com/scl/fi/ahl7p9asseldt95f9s408/correct-choice-43861.mp3?rlkey=3iy41q71iumgnuqca7los24zu&st=mj1v4i7j&dl=0"></audio>
-    <audio id="hideSound" src="https://dl.dropbox.com/scl/fi/xvxq5dlhobkpjckzhub7z/rapid-wind-sound-effect-2-108400.mp3?rlkey=fixzfbivofazenalmkgh7dqh9&st=iewwoho9&dl=0"></audio>
+    <audio id="rollSound" src="https://dl.dropbox.com/scl/fi/lawmyuvtabr6nybkd4f6t/jogar-dados.mp3?rlkey=evl8egxa4w0ennfguprqngoy3&st=68x60hc3&dl=0" preload="auto"></audio>
+    <audio id="removeSound" src="https://dl.dropbox.com/scl/fi/74y42ahz7m5vsh6xzuyhj/tap-notification-180637.mp3?rlkey=nzxmoqd8s0l4avnc49aiqj840&st=h9uqk0ev&dl=0" preload="auto"></audio>
+    <audio id="addSound" src="https://dl.dropbox.com/scl/fi/ahl7p9asseldt95f9s408/correct-choice-43861.mp3?rlkey=3iy41q71iumgnuqca7los24zu&st=mj1v4i7j&dl=0" preload="auto"></audio>
+    <audio id="pageLoadSound" src="https://dl.dropbox.com/scl/fi/ahl7p9asseldt95f9s408/correct-choice-43861.mp3?rlkey=3iy41q71iumgnuqca7los24zu&st=mj1v4i7j&dl=0" preload="auto"></audio>
+    <audio id="hideSound" src="https://dl.dropbox.com/scl/fi/xvxq5dlhobkpjckzhub7z/rapid-wind-sound-effect-2-108400.mp3?rlkey=fixzfbivofazenalmkgh7dqh9&st=iewwoho9&dl=0" preload="auto"></audio>
+    <audio id="somClique" src="https://dl.dropbox.com/scl/fi/xvxq5dlhobkpjckzhub7z/rapid-wind-sound-effect-2-108400.mp3?rlkey=fixzfbivofazenalmkgh7dqh9&st=iewwoho9&dl=0" preload="auto"></audio>
+
 
     <script>
         const diceContainer = document.querySelector('.dice-container');
@@ -478,6 +480,11 @@ padding: 10px;
         const hideDiceBtn = document.getElementById('hideDiceBtn');
         const diceCounterContainer = document.getElementById('diceCounter');
         const diceArea = document.querySelector('.dice-area');
+        const startGameBtn = document.getElementById('startGameBtn');
+		const telaInicial = document.querySelector('.tela-inicial');
+		const jogoDiv = document.querySelector('.jogo');
+		const containersobreojogo = document.querySelector('.container-sobre-o-jogo');
+		const abresobreojogo = document.getElementById('abresobreojogo');
         const maxDice = 5;
         const minDice = 0;
         let currentDiceCount = 0; // Inicialmente 0 dados
@@ -485,6 +492,7 @@ padding: 10px;
         let pageLoaded = false; // Nova flag para controlar se a página carregou
 
         // Elementos de áudio
+        const somClique = document.getElementById("somClique");
         const rollSound = document.getElementById('rollSound');
         const removeSound = document.getElementById('removeSound');
         const addSound = document.getElementById('addSound');
@@ -650,11 +658,6 @@ padding: 10px;
         observer.observe(diceCounterContainer, { childList: true, subtree: true });
         
         // Abre o jogo
-        const startGameBtn = document.getElementById('startGameBtn');
-const telaInicial = document.querySelector('.tela-inicial');
-const jogoDiv = document.querySelector('.jogo');
-const containersobreojogo = document.querySelector('.container-sobre-o-jogo');
-const abresobreojogo = document.getElementById('abresobreojogo');
 
 startGameBtn.addEventListener('click', () => {
     telaInicial.style.display = 'none';
@@ -681,7 +684,20 @@ function voltarTelaInicial() {
     telaInicial.style.display = 'flex';
     containersobreojogo.style.display = 'none';
     telaInicial.style.justifyContent = 'center'; // Isso garante centralização horizontal
+    
 }
+
+//adiciona som aos botoes de casa e sobre o jogo
+function tocarSom() {
+  // Garante que o som seja tocado do início toda vez
+  somClique.currentTime = 0;
+  somClique.play();
+}
+
+document.getElementById("abresobreojogo").addEventListener("click", tocarSom);
+document.getElementById("tela-inicial-Btn").addEventListener("click", tocarSom);
+document.getElementById("tela-inicial-Btn2").addEventListener("click", tocarSom);
+
 
     </script>
     
