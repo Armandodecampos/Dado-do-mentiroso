@@ -321,7 +321,7 @@ padding: 20px 40px;
         border: none;
         border-radius: 15px;
         cursor: pointer;
-        box-shadow: 0 0 15px rgba(0,0,0,0.6);
+        box-shadow: 0 0px 10px rgba(0, 0, 0, 1);
         transition: transform 0.2s, box-shadow 0.2s;
         font-weight:bold;
 }
@@ -335,7 +335,7 @@ padding: 15px;
         border: none;
         border-radius: 15px;
         cursor: pointer;
-        box-shadow: 0 0 15px rgba(0,0,0,0.6);
+        box-shadow: 0 0px 10px rgba(0, 0, 0, 1);
         transition: transform 0.2s, box-shadow 0.2s;
         font-weight:bold;
 }
@@ -354,10 +354,81 @@ padding: 10px;
         border: none;
         border-radius: 50px;
         cursor: pointer;
-        box-shadow: 0 0 15px rgba(0,0,0,0.6);
+        box-shadow: 0 0px 10px rgba(0, 0, 0, 1);
         transition: transform 0.2s, box-shadow 0.2s;
         font-weight:bold;
 }
+.botaodesons{
+position:fixed;
+bottom:15px;
+right:15px;
+width:50px;
+height:50px;
+padding: 10px;
+        font-size: 25px;
+        font-family: 'Segoe UI', sans-serif;
+        color: white;
+        background: #953;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        box-shadow: 0 0px 10px rgba(0, 0, 0, 1);
+        transition: transform 0.2s, box-shadow 0.2s;
+        font-weight:bold;
+}
+
+.lista-sons-container {
+    position: fixed;
+    top: 200px;
+    bottom: 200px;
+    left: 30px;
+    right: 30px;
+    max-width: 500px;
+    margin: auto;
+    background-color: #111;
+    color: white;
+    border-radius: 15px;
+    overflow-y: auto;
+    padding: 20px;
+    z-index: 999;
+    box-shadow: 0 0px 10px rgba(0, 0, 0, 1);
+}
+
+.lista-sons h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.itens-de-som {
+    list-style: none;
+    padding: 0;
+}
+
+.itens-de-som li {
+    margin-bottom: 10px;
+    cursor: pointer;
+    padding: 10px;
+    background: #333;
+    border-radius: 10px;
+    transition: background 0.2s;
+    user-select: none;
+}
+
+.itens-de-som li:hover {
+    background: #555;
+}
+
+.fechar-lista-sons {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 25px;
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
     </style>
 </head>
 <body>
@@ -461,6 +532,18 @@ padding: 10px;
         <button class="tela-inicial-Btn" id="tela-inicial-Btn" onclick="voltarTelaInicial()">
 <i class="fas fa-home"></i>
 </button>
+<button class="botaodesons" id="botaodesons" onclick="botaodesons()">
+<i class="fas fa-volume-up"></i>
+</button>
+<div id="listaDeSons" style="display: none;" class="lista-sons-container">
+    <div class="lista-sons">
+        <button onclick="fecharListaSons()" class="fechar-lista-sons">✖</button>
+        <h2 style="color:white;">Lista de Sons</h2>
+        <ul id="listaItensDeSom" class="itens-de-som">
+            <!-- Itens adicionados via JS -->
+        </ul>
+    </div>
+</div>
     </div>
 
     <audio id="rollSound" src="https://dl.dropbox.com/scl/fi/lawmyuvtabr6nybkd4f6t/jogar-dados.mp3?rlkey=evl8egxa4w0ennfguprqngoy3&st=68x60hc3&dl=0" preload="auto"></audio>
@@ -718,6 +801,37 @@ function tocarSom() {
 document.getElementById("abresobreojogo").addEventListener("click", tocarSom);
 document.getElementById("tela-inicial-Btn").addEventListener("click", tocarSom);
 document.getElementById("tela-inicial-Btn2").addEventListener("click", tocarSom);
+
+//cria sons que podem ser reprozidos ao clicar
+
+const sonsDisponiveis = [
+    { nome: "Dado Girando", url: "https://dl.dropbox.com/scl/fi/lawmyuvtabr6nybkd4f6t/jogar-dados.mp3?rlkey=evl8egxa4w0ennfguprqngoy3&st=68x60hc3&dl=0" },
+    { nome: "Som de Clique", url: "https://dl.dropbox.com/scl/fi/xvxq5dlhobkpjckzhub7z/rapid-wind-sound-effect-2-108400.mp3?rlkey=fixzfbivofazenalmkgh7dqh9&st=iewwoho9&dl=0" },
+    { nome: "Som de Adicionar", url: "https://dl.dropbox.com/scl/fi/ahl7p9asseldt95f9s408/correct-choice-43861.mp3?rlkey=3iy41q71iumgnuqca7los24zu&st=mj1v4i7j&dl=0" },
+    { nome: "Som de Remover", url: "https://dl.dropbox.com/scl/fi/74y42ahz7m5vsh6xzuyhj/tap-notification-180637.mp3?rlkey=nzxmoqd8s0l4avnc49aiqj840&st=h9uqk0ev&dl=0" }
+];
+
+function botaodesons() {
+    const lista = document.getElementById("listaDeSons");
+    const ul = document.getElementById("listaItensDeSom");
+    ul.innerHTML = ''; // limpa se já existirem itens
+
+    sonsDisponiveis.forEach((som, index) => {
+        const li = document.createElement("li");
+        li.textContent = som.nome;
+        li.onclick = () => {
+            const audio = new Audio(som.url);
+            audio.play();
+        };
+        ul.appendChild(li);
+    });
+
+    lista.style.display = "block";
+}
+
+function fecharListaSons() {
+    document.getElementById("listaDeSons").style.display = "none";
+}
 
 
     </script>
