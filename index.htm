@@ -241,9 +241,8 @@ margin:auto; left:0;right;0;max-width: 600px; padding: 20px; color: white; font-
         }
 
         .die.hidden-value {
-            color: transparent;
-            background-color: #333; /* Cor de fundo para simular oculto */
-            border-color: #333;
+            color: #fff;
+            background:#fff;
         }
 
         .die.rolling {
@@ -251,8 +250,8 @@ margin:auto; left:0;right;0;max-width: 600px; padding: 20px; color: white; font-
         }
 
         @keyframes roll {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(720deg); }
+            0% {  position:absolute;bottom:-300px;transform: rotate(0deg);}
+            100% { transform: rotate(700deg);bottom:200px;}
         }
 
 
@@ -526,10 +525,12 @@ padding: 10px;
         point.classList.add('counter-point');
         point.innerHTML = '<i class="fas fa-dice-six"></i></i>'; // Adiciona o ícone do dado
         // Aplica um pequeno deslocamento aleatório com transform
-        const offsetX = Math.floor(Math.random() * 5) + 1;
-        const offsetY = Math.floor(Math.random() * 3) - 1; // Deslocamento vertical menor
-        const signX = Math.random() < 0.5 ? 1 : -1;
-        point.style.transform = `translate(${signX * offsetX}px, ${offsetY}px)`;
+        // Aplica um pequeno deslocamento e rotação aleatória
+const offsetX = Math.floor(Math.random() * 5) + 1;
+const offsetY = Math.floor(Math.random() * 3) - 1;
+const signX = Math.random() < 0.5 ? 1 : -1;
+const rotation = (Math.random() < 0.5 ? -1 : 1) * (Math.random() * 15);
+point.style.transform = `translate(${signX * offsetX}px, ${offsetY}px) rotate(${rotation}deg)`;
         diceCounterContainer.appendChild(point);
     }
     updateButtonColors(); // Atualiza as cores dos botões ao alterar a contagem
@@ -563,7 +564,9 @@ padding: 10px;
                 // Aplica um deslocamento aleatório ao rolar
                 const randomX = Math.floor(Math.random() * 20) - 10; // Deslocamento horizontal entre -10 e 10 pixels
                 const randomY = Math.floor(Math.random() * 20) - 10; // Deslocamento vertical entre -10 e 10 pixels
-                die.style.transform = `translate(${randomX}px, ${randomY}px)`;
+                const rotation = (Math.random() < 0.5 ? -1 : 1) * (Math.random() * 15); // entre -15 e 15 graus
+die.style.transform = `translate(${randomX}px, ${randomY}px) rotate(${rotation}deg)`;
+
 
             }, 500);
         });
@@ -614,10 +617,12 @@ padding: 10px;
         newDie.classList.add('die');
         newDie.innerHTML = '<i class="fas fa-dice-six"></i>';
         // Aplica um pequeno deslocamento aleatório com transform
-        const offsetX = Math.floor(Math.random() * 5) + 1;
-        const offsetY = Math.floor(Math.random() * 3) - 1; // Deslocamento vertical menor
-        const signX = Math.random() < 0.5 ? 1 : -1;
-        newDie.style.transform = `translate(${signX * offsetX}px, ${offsetY}px)`;
+        // Aplica um pequeno deslocamento e rotação aleatória
+const offsetX = Math.floor(Math.random() * 5) + 1;
+const offsetY = Math.floor(Math.random() * 3) - 1;
+const signX = Math.random() < 0.5 ? 1 : -1;
+const rotation = (Math.random() < 0.5 ? -1 : 1) * (Math.random() * 15); // entre -15 e 15 graus
+newDie.style.transform = `translate(${signX * offsetX}px, ${offsetY}px) rotate(${rotation}deg)`;
         diceContainer.appendChild(newDie);
         currentDiceCount++;
         updateDiceCounter();
