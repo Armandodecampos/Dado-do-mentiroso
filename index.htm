@@ -863,12 +863,67 @@ const sonsDisponiveis = [
                 const ul = categoriaDiv.querySelector("ul");
                 sonsDisponiveis.filter(som => som.categoria === categoria).forEach(som => {
                     const li = document.createElement("li");
-                    li.textContent = som.nome;
-                    li.onclick = () => {
-                        const audio = new Audio(som.url);
-                        audio.play();
-                    };
-                    ul.appendChild(li);
+li.style.display = "flex";
+li.style.alignItems = "center";
+li.style.gap = "15px";
+li.style.padding = "10px";
+
+// Criação do áudio
+const audio = new Audio(som.url);
+audio.preload = "auto";
+
+// Botão toggle play/pause
+const toggleBtn = document.createElement("button");
+toggleBtn.innerHTML = '<i class="fas fa-play"></i>';
+toggleBtn.style.width = "50px";
+toggleBtn.style.height = "50px";
+toggleBtn.style.fontSize = "20px";
+toggleBtn.style.borderRadius = "50%";
+toggleBtn.style.border = "none";
+toggleBtn.style.cursor = "pointer";
+toggleBtn.style.backgroundColor = "#222";
+toggleBtn.style.color = "#fff";
+toggleBtn.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.5)";
+toggleBtn.style.display = "flex";
+toggleBtn.style.alignItems = "center";
+toggleBtn.style.justifyContent = "center";
+toggleBtn.style.transition = "all 0.2s";
+
+let isPlaying = false;
+
+toggleBtn.onclick = (e) => {
+    e.stopPropagation();
+    if (!isPlaying) {
+        audio.currentTime = 0;
+        audio.play();
+        toggleBtn.innerHTML = '<i class="fas fa-pause"></i>';
+        isPlaying = true;
+    } else {
+        audio.pause();
+        toggleBtn.innerHTML = '<i class="fas fa-play"></i>';
+        isPlaying = false;
+    }
+};
+
+// Quando o áudio terminar
+audio.onended = () => {
+    toggleBtn.innerHTML = '<i class="fas fa-play"></i>';
+    isPlaying = false;
+};
+
+// Nome do som
+const nomeSpan = document.createElement("span");
+nomeSpan.textContent = som.nome;
+nomeSpan.style.flex = "1";
+nomeSpan.style.textAlign = "left";
+nomeSpan.style.margin = "0";
+nomeSpan.style.fontSize = "16px";
+
+// Monta o item
+li.appendChild(toggleBtn);
+li.appendChild(nomeSpan);
+ul.appendChild(li);
+
                 });
             });
 
