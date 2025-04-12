@@ -388,11 +388,26 @@ padding: 10px;
     background-color: #111;
     color: white;
     border-radius: 15px;
-    overflow-y: auto;
+    overflow-y: auto; /* Garante que o conteúdo interno role */
     padding: 20px;
     z-index: 999;
     box-shadow: 0 0px 10px rgba(0, 0, 0, 1);
 }
+
+ /* Scroll personalizado para lista de sons */
+        .lista-sons-container::-webkit-scrollbar {
+            width: 8px; /* Largura da barra de rolagem */
+        }
+
+        .lista-sons-container::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, #4a00e0, #8e2de2); /* Gradiente para o "polegar" */
+
+        }
+
+        .lista-sons-container::-webkit-scrollbar-track {
+            background: #222; /* Cor de fundo da trilha */
+            border-radius: 10px; /* Bordas arredondadas */
+        }
 
 .lista-sons h2 {
     text-align: center;
@@ -419,15 +434,23 @@ padding: 10px;
 }
 
 .fechar-lista-sons {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 25px;
-    background: transparent;
-    border: none;
-    color: white;
-    cursor: pointer;
-}
+            position: sticky;
+            top:0px;
+right:15px;
+width:50px;
+height:50px;
+padding: 10px;
+        font-size: 20px;
+        font-family: 'Segoe UI', sans-serif;
+        color: white;
+        background: #a00;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        box-shadow: 0 0px 10px rgba(0, 0, 0, 1);
+        transition: transform 0.2s, box-shadow 0.2s;
+        font-weight:bold;
+        }
 
     </style>
 </head>
@@ -536,14 +559,13 @@ padding: 10px;
 <i class="fas fa-volume-up"></i>
 </button>
 <div id="listaDeSons" style="display: none;" class="lista-sons-container">
-    <div class="lista-sons">
-        <button onclick="fecharListaSons()" class="fechar-lista-sons">✖</button>
-        <h2 style="color:white;">Lista de Sons</h2>
-        <ul id="listaItensDeSom" class="itens-de-som">
-            <!-- Itens adicionados via JS -->
-        </ul>
-    </div>
-</div>
+            <div class="lista-sons">
+                <button onclick="fecharListaSons()" class="fechar-lista-sons">✖</button>
+                <h2 style="color:white;">Lista de Sons</h2>
+                <div id="categoriasDeSons">
+                    </div>
+            </div>
+        </div>
     </div>
 
     <audio id="rollSound" src="https://dl.dropbox.com/scl/fi/lawmyuvtabr6nybkd4f6t/jogar-dados.mp3?rlkey=evl8egxa4w0ennfguprqngoy3&st=68x60hc3&dl=0" preload="auto"></audio>
@@ -805,50 +827,56 @@ document.getElementById("tela-inicial-Btn2").addEventListener("click", tocarSom)
 //cria sons que podem ser reprozidos ao clicar
 
 const sonsDisponiveis = [
-{ nome: "Boa Sorte (Silvio Santos)", url: "https://dl.dropbox.com/scl/fi/tls7r8jaj5zpamwx1ls4j/silvio-santos-boa-sorte.mp3?rlkey=c2dpp43kynh5jjoia8sfkc6wn&st=g1ynz5pl&dl=0" },
-    { nome: "Burro", url: "https://dl.dropbox.com/scl/fi/411et0qnenlxmjgfx9hwi/donkey-226114.mp3?rlkey=2dlv2f4kxz9ljis7v15tue9zf&st=a81tfmir&dl=0" },
-    { nome: "Aplauso 1", url: "https://dl.dropbox.com/scl/fi/1a0rr4awqhmkdoizu46cy/applause-cheer-236786.mp3?rlkey=bif0qb8eymbglmgid79loazbs&st=wbr6wnkb&dl=0" },
-    { nome: "Errou! (Faustão)", url: "https://dl.dropbox.com/scl/fi/x7htyjrvww4he0uxmtgyh/faustao-errou.mp3?rlkey=uw2hx3usq8rr03c8m8scyssrn&st=nmtq90tc&dl=0" },
-    { nome: "Obrigado, Amigo, Você É Um Amigo (Pica-Pau)", url: "https://dl.dropbox.com/scl/fi/6j5drtnj0thv9s8044e4y/obrigado-amigo-voce-e-um-amigo.mp3?rlkey=bwbaah8ftn0usvf2bcy1w7bdx&st=mympdlgd&dl=0" },
-    { nome: "Ganhar E Perder (Dilma)", url: "https://dl.dropbox.com/scl/fi/tsxbt88eggsa05mbunctg/dilma-ganhar-e-perder.mp3?rlkey=ohnmki1ifksci0x8pwqdzss7j&st=2vbnu26v&dl=0" },
-    { nome: "Risada Do Muttley", url: "https://dl.dropbox.com/scl/fi/h2n2lo37ek7ugszaxjt5q/risada-muttley-rabugento.mp3?rlkey=5bxjbu7ist53774ar2t4k0o2e&st=v46t5ep4&dl=0" },
-    { nome: "Não Aguenta A Brincadeira (Chapolin)", url: "https://dl.dropbox.com/scl/fi/lqpabtcw05y9xdstejsxk/chapolin-nao-aguenta-brincadeira.mp3?rlkey=yhzy8jzfii0n12cukbv4xzlwf&st=4eaf2itd&dl=0" },
-    { nome: "Grilo Estridulando", url: "https://dl.dropbox.com/scl/fi/x8relcqobgxs7wiuyzzgq/grilo-estridulando.mp3?rlkey=vzz9qo90m5aeaxi3o3kutz2w3&st=7g6u00g2&dl=0" },
-    { nome: "Está Certo Disso? (Silvio Santos)", url: "https://dl.dropbox.com/scl/fi/ahcvo359pf1av85aquhgp/silvio-santos-esta-certo-disso.mp3?rlkey=4emy83uq1qpsvits8mcri2r5c&st=ooh0aupd&dl=0" },
-    { nome: "Som De Derrota", url: "https://dl.dropbox.com/scl/fi/j6i8byyck2esi8jbul0lt/som-de-derrota.mp3?rlkey=fojp888qskh5hzvkpy5b2orfb&st=234koeaz&dl=0" },
-    { nome: "Vazio", url: "" },
-    { nome: "Vazio", url: "" },
-    { nome: "Vazio", url: "" },
-    { nome: "Vazio", url: "" },
-    { nome: "Vazio", url: "" },
-    { nome: "Vazio", url: "" }
-    
-    
+            { nome: "Boa Sorte (Silvio Santos)", url: "https://dl.dropbox.com/scl/fi/tls7r8jaj5zpamwx1ls4j/silvio-santos-boa-sorte.mp3?rlkey=c2dpp43kynh5jjoia8sfkc6wn&st=g1ynz5pl&dl=0", categoria: "Parabenização", cor: "#4CAF50" },
+            { nome: "Burro", url: "https://dl.dropbox.com/scl/fi/411et0qnenlxmjgfx9hwi/donkey-226114.mp3?rlkey=2dlv2f4kxz9ljis7v15tue9zf&st=a81tfmir&dl=0", categoria: "Provocação", cor: "#F44336" },
+            { nome: "Aplauso 1", url: "https://dl.dropbox.com/scl/fi/1a0rr4awqhmkdoizu46cy/applause-cheer-236786.mp3?rlkey=bif0qb8eymbglmgid79loazbs&st=wbr6wnkb&dl=0", categoria: "Parabenização", cor: "#4CAF50" },
+            { nome: "Errou! (Faustão)", url: "https://dl.dropbox.com/scl/fi/x7htyjrvww4he0uxmtgyh/faustao-errou.mp3?rlkey=uw2hx3usq8rr03c8m8scyssrn&st=nmtq90tc&dl=0", categoria: "Provocação", cor: "#F44336" },
+            { nome: "Obrigado, Amigo, Você É Um Amigo (Pica-Pau)", url: "https://dl.dropbox.com/scl/fi/6j5drtnj0thv9s8044e4y/obrigado-amigo-voce-e-um-amigo.mp3?rlkey=bwbaah8ftn0usvf2bcy1w7bdx&st=mympdlgd&dl=0", categoria: "Parabenização", cor: "#4CAF50" },
+            { nome: "Ganhar E Perder (Dilma)", url: "https://dl.dropbox.com/scl/fi/tsxbt88eggsa05mbunctg/dilma-ganhar-e-perder.mp3?rlkey=ohnmki1ifksci0x8pwqdzss7j&st=2vbnu26v&dl=0", categoria: "Pergunta", cor: "#2196F3" },
+            { nome: "Risada Do Muttley", url: "https://dl.dropbox.com/scl/fi/h2n2lo37ek7ugszaxjt5q/risada-muttley-rabugento.mp3?rlkey=5bxjbu7ist53774ar2t4k0o2e&st=v46t5ep4&dl=0", categoria: "Risada", cor: "#FF9800" },
+            { nome: "Não Aguenta A Brincadeira (Chapolin)", url: "https://dl.dropbox.com/scl/fi/lqpabtcw05y9xdstejsxk/chapolin-nao-aguenta-brincadeira.mp3?rlkey=yhzy8jzfii0n12cukbv4xzlwf&st=4eaf2itd&dl=0", categoria: "Provocação", cor: "#F44336" },
+            { nome: "Grilo Estridulando", url: "https://dl.dropbox.com/scl/fi/x8relcqobgxs7wiuyzzgq/grilo-estridulando.mp3?rlkey=vzz9qo90m5aeaxi3o3kutz2w3&st=7g6u00g2&dl=0", categoria: "Risada", cor: "#FF9800" },
+            { nome: "Está Certo Disso? (Silvio Santos)", url: "https://dl.dropbox.com/scl/fi/ahcvo359pf1av85aquhgp/silvio-santos-esta-certo-disso.mp3?rlkey=4emy83uq1qpsvits8mcri2r5c&st=ooh0aupd&dl=0", categoria: "Pergunta", cor: "#2196F3" },
+            { nome: "Som De Derrota", url: "https://dl.dropbox.com/scl/fi/j6i8byyck2esi8jbul0lt/som-de-derrota.mp3?rlkey=fojp888qskh5hzvkpy5b2orfb&st=234koeaz&dl=0", categoria: "Provocação", cor: "#F44336" },
+            { nome: "Vazio", url: "", categoria: "Outros", cor: "#9E9E9E" },
+            { nome: "Vazio", url: "", categoria: "Outros", cor: "#9E9E9E" },
+            { nome: "Vazio", url: "", categoria: "Outros", cor: "#9E9E9E" },
+            { nome: "Vazio", url: "", categoria: "Outros", cor: "#9E9E9E" },
+            { nome: "Vazio", url: "", categoria: "Outros", cor: "#9E9E9E" },
+            { nome: "Vazio", url: "", categoria: "Outros", cor: "#9E9E9E" }
 ];
 
-function botaodesons() {
-    const lista = document.getElementById("listaDeSons");
-    const ul = document.getElementById("listaItensDeSom");
-    ul.innerHTML = ''; // limpa se já existirem itens
+ function botaodesons() {
+            const lista = document.getElementById("listaDeSons");
+            const categorias = document.getElementById("categoriasDeSons");
+            categorias.innerHTML = ''; // Limpa categorias anteriores
 
-    sonsDisponiveis.forEach((som, index) => {
-        const li = document.createElement("li");
-        li.textContent = som.nome;
-        li.onclick = () => {
-            const audio = new Audio(som.url);
-            audio.play();
-        };
-        ul.appendChild(li);
-    });
+            const categoriasUnicas = [...new Set(sonsDisponiveis.map(som => som.categoria))];
 
-    lista.style.display = "block";
-}
+            categoriasUnicas.forEach(categoria => {
+                const categoriaDiv = document.createElement("div");
+                const corCategoria = sonsDisponiveis.find(som => som.categoria === categoria).cor;
+                categoriaDiv.innerHTML = `<h3 style="color:${corCategoria};">${categoria}</h3><ul class="itens-de-som"></ul>`;
+                categorias.appendChild(categoriaDiv);
 
-function fecharListaSons() {
-    document.getElementById("listaDeSons").style.display = "none";
-}
+                const ul = categoriaDiv.querySelector("ul");
+                sonsDisponiveis.filter(som => som.categoria === categoria).forEach(som => {
+                    const li = document.createElement("li");
+                    li.textContent = som.nome;
+                    li.onclick = () => {
+                        const audio = new Audio(som.url);
+                        audio.play();
+                    };
+                    ul.appendChild(li);
+                });
+            });
 
+            lista.style.display = "block";
+        }
 
+        function fecharListaSons() {
+            document.getElementById("listaDeSons").style.display = "none";
+        }
     </script>
 
     </div>
